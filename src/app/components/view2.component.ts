@@ -57,7 +57,7 @@ export class View2Component implements OnInit {
 
   async delete(){
 
-    console.log(this.searchCountries);
+    // console.log(this.searchCountries);
 
 
     await this.dataDB.deleteApi(this.form.value.apikey)

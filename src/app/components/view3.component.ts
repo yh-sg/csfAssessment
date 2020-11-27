@@ -1,6 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { logging } from 'protractor';
 import { CountryNewsDataBase } from '../countrynews.database';
 
 @Component({
@@ -53,16 +54,25 @@ export class View3Component implements OnInit {
             content: r['content'],
           }
         })
-        // console.log(this.searchArticle);
+    // this.results[0].articles = [this.searchArticle,Date.now()];
+    // console.log(this.results[0].articles[1]);
 
 
-    this.results[0].articles = this.searchArticle;
-    console.log(this.results[0].articles);
-
-    console.log(Date.now());
-    
-
-    this.dataDB.updateArticle(this.results[0])
+    //cached articles!
+    if(this.results[0].articles == undefined){
+      this.results[0].articles = [this.searchArticle,Date.now()];
+      this.dataDB.updateArticle(this.results[0])
+    }else{
+      const millis = Date.now() - this.results[0].articles[1];
+      const sec = Math.floor(millis / 1000)
+      if(sec>300){
+        this.results[0].articles = [this.searchArticle,Date.now()];
+        this.dataDB.updateArticle(this.results[0])
+      }else{
+        return;
+      }
+    }
+    // this.dataDB.updateArticle(this.results[0])
 
   }
 }
