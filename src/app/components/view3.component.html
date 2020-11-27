@@ -1,1 +1,25 @@
-<p>view3 works!</p>
+<div class="d-flex justify-content-between">
+    <div>
+        <h4>News from {{countryName}}</h4>
+    </div>
+    <div>
+        <button type="button" class="btn btn-success" [routerLink]="['/view1']">Back</button>
+    </div>
+</div>
+
+<hr>
+
+<div *ngFor="let item of searchArticle; let i = index">
+    <div class="row">
+        <div class="col-4"><img src={{item.image}} alt="img"></div>
+        <div class="col">
+            <h6>{{item.title}}</h6>
+            <p>{{item.description}}</p>
+            <hr>
+            <p>{{item.content}}</p>
+        </div>
+    </div>
+    <hr>
+</div>
+    
+

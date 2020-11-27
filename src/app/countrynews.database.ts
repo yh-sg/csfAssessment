@@ -28,11 +28,27 @@ export class CountryNewsDataBase extends Dexie{
         .map(d=>{
             return{
                 id: d.id,
-                API_KEY: d.API_KEY,
+                apikey: d.apikey,
                 countryList:d.countryList,
                 articles:d.articles
             }
         })
+    }
+
+    async getApi(apik: string): Promise<Data> {
+        return (await this.data.get(apik)) as Data;
+      }
+
+      async deleteApi(apik: string): Promise<any>{
+        // return await this.data.delete(t.apikey)
+        return await this.data
+            .where('apikey').equals(apik)
+            .delete()
+      }
+
+      async updateArticle(t: Data): Promise<any>{
+        // this.todo2.add(t)
+        return await this.data.put(t)
     }
 
 }

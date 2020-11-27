@@ -1,6 +1,6 @@
 export interface Data{
     id?: number,
-    API_KEY?: string,
+    apikey?: string,
     countryList?:[],
     articles?:[]
 }

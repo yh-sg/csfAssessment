@@ -1,5 +1,7 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { CountryNewsDataBase } from '../countrynews.database';
 
 @Component({
   selector: 'app-view3',
@@ -8,19 +10,37 @@ import { Component, OnInit } from '@angular/core';
 })
 export class View3Component implements OnInit {
 
+  countryCode:string = ''
+  countryName:string = ''
+
+  results:any;
+
+  key:any;
+
   searchArticle:any;
 
-  constructor(private http:HttpClient) { }
+  constructor(private http:HttpClient, private activatedroute: ActivatedRoute, private dataDB: CountryNewsDataBase) { }
 
   async ngOnInit() {
-    const url = ""
 
-    const result = await this.http.get<any>(url)
+    this.results = await this.dataDB.getCountry()
+
+    this.key = this.results[0].apikey
+
+    this.countryCode = this.activatedroute.snapshot.params.countrycode;
+    this.countryName = this.activatedroute.snapshot.params.country;
+
+    const params = new HttpParams()
+      .set('apiKey', this.key)
+      .set('pageSize', '30')
+    
+    const url = `https://newsapi.org/v2/top-headlines?country=${this.countryCode.toLowerCase()}`
+
+    const result = await this.http.get<any>(url, {params})
       .toPromise()
 
       // console.log(result.articles);
         
-
         this.searchArticle = result.articles.map(r=>{
           return{
             sourceName: r['source.name'],
@@ -33,9 +53,16 @@ export class View3Component implements OnInit {
             content: r['content'],
           }
         })
+        // console.log(this.searchArticle);
 
-        console.log(this.searchArticle);
+
+    this.results[0].articles = this.searchArticle;
+    console.log(this.results[0].articles);
+
+    console.log(Date.now());
+    
+
+    this.dataDB.updateArticle(this.results[0])
 
   }
-
 }

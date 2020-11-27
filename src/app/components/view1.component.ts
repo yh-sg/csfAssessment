@@ -17,23 +17,26 @@ export class View1Component implements OnInit {
 
   async ngOnInit() {
 
-    const url = "https://restcountries.eu/rest/v2/all"
+    // const url = "https://restcountries.eu/rest/v2/all"
 
-    const result = await this.http.get<any>(url)
-      .toPromise()
+    // const result = await this.http.get<any>(url)
+    //   .toPromise()
 
-      // console.log(result);
+    //   // console.log(result);
     
-        this.searchCountries = result.map(r=>{
-          return{
-            name: r['name'],
-            alpha2Code: r['alpha2Code'],
-            flag: r['flag']
-          }
-        })
+    //     this.searchCountries = result.map(r=>{
+    //       return{
+    //         name: r['name'],
+    //         alpha2Code: r['alpha2Code'],
+    //         flag: r['flag']
+    //       }
+    //     })
 
         this.results = await this.dataDB.getCountry()
-        // console.log(this.results[1].countryList);
+
+        this.searchCountries = this.results[0].countryList
+
+        console.log(this.searchCountries);
         
 
       // console.log(this.searchCountries);

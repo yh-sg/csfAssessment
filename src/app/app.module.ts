@@ -13,7 +13,7 @@ import { CountryNewsDataBase } from './countrynews.database';
 const ROUTES: Routes = [
   {path: "view1", component: View1Component},
   {path: "view2", component: View2Component},
-  {path: "view3", component: View3Component},
+  {path: "view3/:countrycode/:country", component: View3Component},
   {path: "**", redirectTo:"/view2", pathMatch:"full"}
 ] 
 

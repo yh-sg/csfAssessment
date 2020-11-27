@@ -15,11 +15,13 @@ export class View2Component implements OnInit {
 
   searchCountries:any;
 
+  results;
+
   constructor(private dataDB: CountryNewsDataBase,private router:Router, private fb:FormBuilder, private http:HttpClient) { }
 
   async ngOnInit() {
     this.form = this.fb.group({
-      apikey: this.fb.control("",[Validators.required, Validators.minLength(10)])
+      apikey: this.fb.control("",[Validators.required, Validators.minLength(30)])
     })
     const url = "https://restcountries.eu/rest/v2/all"
 
@@ -42,18 +44,26 @@ export class View2Component implements OnInit {
   async add(){
     console.log(this.form.value.apikey);
     const re:Data = {
-      API_KEY: this.form.value.apikey,
+      apikey: this.form.value.apikey,
       countryList: this.searchCountries
     }
 
     await this.dataDB.saveApi(re)
 
-    this.toView1()
+    this.form.get('apikey').reset();
+
 
   }
 
-  delete(){
+  async delete(){
 
+    console.log(this.searchCountries);
+
+
+    await this.dataDB.deleteApi(this.form.value.apikey)
+
+
+    this.form.get('apikey').reset();
   }
 
 }

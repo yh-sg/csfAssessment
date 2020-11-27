@@ -5,7 +5,7 @@
 
 
     <ul *ngFor="let country of searchCountries; let i = index" class="list-group">
-        <li class="list-group-item" (click)="toView3()">
+        <li class="list-group-item" [routerLink]="['/view3', country.alpha2Code, country.name]">
             <div class="d-flex justify-content-between mb-3">
                 <em>{{country.name}}</em>
                 <img src={{country.flag}} alt="flag" class="img-thumbnail">
