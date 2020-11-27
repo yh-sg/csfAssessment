@@ -1,0 +1,21 @@
+<h3>Settings</h3>
+<p>NewsAPI.org</p>
+
+<form [formGroup]="form">
+    <div class="form-group">
+        <label>NewsAPI.org</label>
+        <input type="text" class="form-control" placeholder="API from newsapi.org" formControlName="apikey">
+        <p class="small">Please enter the API key from newsapi.org</p>
+    </div>
+
+    <div class="d-flex justify-content-between">
+        <div>
+            <button type="button" class="btn btn-primary" (click)="toView1()">Back</button>
+            <button type="button" class="btn btn-danger" (click)="delete()" [disabled]="form.invalid">Delete</button>
+        </div>
+        <div>
+            <button type="button" class="btn btn-success" (click)="add()" [disabled]="form.invalid">Add</button>
+        </div>
+    </div>
+
+</form>

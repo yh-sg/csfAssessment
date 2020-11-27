@@ -1,0 +1,14 @@
+<div class="d-flex justify-content-between mb-3">
+    <h3>Countries</h3>
+    <button class="btn btn-primary" (click)="toView2()">Setting</button>
+</div>
+
+
+    <ul *ngFor="let country of searchCountries; let i = index" class="list-group">
+        <li class="list-group-item" (click)="toView3()">
+            <div class="d-flex justify-content-between mb-3">
+                <em>{{country.name}}</em>
+                <img src={{country.flag}} alt="flag" class="img-thumbnail">
+            </div>
+        </li>
+    </ul>
